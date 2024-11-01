@@ -1,0 +1,51 @@
+{
+  "name": "cls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon",
+    "build": "rimraf ./dist && tsc && tsc-alias",
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryannguyen2000/x-clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryannguyen2000/x-clone/issues"
+  },
+  "homepage": "https://github.com/ryannguyen2000/x-clone#readme",
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.7",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.10.0"
+  }
+}

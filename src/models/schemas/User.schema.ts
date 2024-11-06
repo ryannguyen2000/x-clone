@@ -54,7 +54,7 @@ export default class User {
     this.password = user.password
     this.forgot_password_token = user.forgot_password_token || ''
     this.username = user.username || ''
-    this.verify = user.verify || 1
+    this.verify = user.verify || 0
     this.website = user.website || ''
   }
 }

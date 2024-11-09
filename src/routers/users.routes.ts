@@ -1,20 +1,33 @@
 import { Router } from 'express'
 import {
+  followController,
   forgotPasswordController,
+  getMeController,
+  getProfieController,
   loginController,
   logoutController,
   registerController,
   resendVerifyEmailController,
-  verifyEmailController
+  unfollowController,
+  updateMeController,
+  verifyEmailController,
+  verifyForgotPasswordTokenController
 } from '~/controllers/users.controllers'
+import { filterMiddleware } from '~/middlewares/common.middlewares'
 import {
-  acessTokenValidator,
+  accessTokenValidator,
   verifyEmailTokenValidator,
   loginValidator,
   refreshTokenValidator,
   registerValidator,
-  forgotPasswordValidator
+  forgotPasswordValidator,
+  verifyForgotPasswordValidator,
+  verifiedUserValidator,
+  updateMeValidator,
+  followValidator,
+  unfollowValidator
 } from '~/middlewares/users.middlewares'
+import { UpdateMeReqBody } from '~/models/requests/User.requests'
 import { wrapRequestHandler } from '~/utils/handlers'
 
 const usersRouter = Router()
@@ -42,7 +55,7 @@ usersRouter.post('/register', registerValidator, wrapRequestHandler(registerCont
  * Header: { Authorization: Bear <access_token> }
  * Body: { refresh_token: string  }
  */
-usersRouter.get('/logout', acessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
+usersRouter.get('/logout', accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
 
 /**
  * Description: Verify email when client click on the link in email
@@ -59,7 +72,7 @@ usersRouter.post('/verify-email', verifyEmailTokenValidator, wrapRequestHandler(
  * Header: { Authorization: Bearer <access_token> }
  * Body: { }
  */
-usersRouter.post('/resend-verify-email', acessTokenValidator, wrapRequestHandler(resendVerifyEmailController))
+usersRouter.post('/resend-verify-email', accessTokenValidator, wrapRequestHandler(resendVerifyEmailController))
 
 /**
  * Description: Submit email to reset password, send email to user
@@ -68,5 +81,88 @@ usersRouter.post('/resend-verify-email', acessTokenValidator, wrapRequestHandler
  * Body: { email: string }
  */
 usersRouter.post('/forgot-password', forgotPasswordValidator, wrapRequestHandler(forgotPasswordController))
+
+/**
+ * Description: Verify link in email to reset password
+ * Path: /verify-forgot-password
+ * Method: POST
+ * Body: {forgot_password_token: string}
+ */
+usersRouter.post(
+  '/verify-forgot-password',
+  verifyForgotPasswordValidator,
+  wrapRequestHandler(verifyForgotPasswordTokenController)
+)
+
+/**
+ * Description: Get my profile
+ * Path: /me
+ * Method: GET
+ * Header: { Authorization: Bearer <access_token> }
+ */
+usersRouter.get('/me', accessTokenValidator, wrapRequestHandler(getMeController))
+
+/**
+ * Description: Update my profile
+ * Path: /me
+ * Method: PATCH
+ * Header: { Authorization: Bearer <access_token> }
+ * Body: UserSchema
+ */
+usersRouter.patch(
+  '/me',
+  accessTokenValidator,
+  verifiedUserValidator,
+  updateMeValidator,
+  filterMiddleware<UpdateMeReqBody>([
+    'name',
+    'date_of_birth',
+    'username',
+    'bio',
+    'location',
+    'website',
+    'avatar',
+    'cover_photo'
+  ]),
+  wrapRequestHandler(updateMeController)
+)
+
+/**
+ * Description: Get user profile
+ * Path: /:username
+ * Method: GET
+ * Header: { Authorization: Bearer <access_token> }
+ */
+usersRouter.get('/:username', wrapRequestHandler(getProfieController))
+
+/**
+ * Description: Follow someone
+ * Path: /follow
+ * Method: POST
+ * Header: { Authorization: Bearer <access_token> }
+ * Body: { followed_user_id: string }
+ */
+usersRouter.post(
+  '/follow',
+  accessTokenValidator,
+  verifiedUserValidator,
+  followValidator,
+  wrapRequestHandler(followController)
+)
+
+/**
+ * Description: delete followed someone
+ * Path: /follow
+ * Method: DELETE
+ * Header: { Authorization: Bearer <access_token> }
+ * Body: { user_id: string }
+ */
+usersRouter.delete(
+  '/follow/:user_id',
+  accessTokenValidator,
+  verifiedUserValidator,
+  unfollowValidator,
+  wrapRequestHandler(unfollowController)
+)
 
 export default usersRouter

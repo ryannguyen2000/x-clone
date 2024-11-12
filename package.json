@@ -23,15 +23,18 @@
   },
   "homepage": "https://github.com/ryannguyen2000/x-clone#readme",
   "dependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash": "^4.17.13",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-validator": "^7.2.0",
+    "formidable": "^3.5.2",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mongodb": "^6.9.0"
+    "mongodb": "^6.9.0",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

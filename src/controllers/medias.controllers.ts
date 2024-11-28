@@ -5,7 +5,8 @@ import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 import mediasService from '~/services/medias.services'
 import fs from 'fs'
-import mime from 'mime'
+// import mime from 'mime'
+const mime = require('mime')
 
 export const uploadImageController = async (req: Request, res: Response, next: NextFunction) => {
   const data = await mediasService.uploadImage(req)
@@ -15,21 +16,28 @@ export const uploadImageController = async (req: Request, res: Response, next: N
   })
 }
 
+export const uploadVideoController = async (req: Request, res: Response, next: NextFunction) => {
+  const url = await mediasService.uploadvideo(req)
+  res.json({
+    message: USERS_MESSAGES.UPLOAD_SUCCESS,
+    result: url
+  })
+}
+
+export const uploadVideoHlsController = async (req: Request, res: Response, next: NextFunction) => {
+  const url = await mediasService.uploadvideoHls(req)
+  res.json({
+    message: USERS_MESSAGES.UPLOAD_SUCCESS,
+    result: url
+  })
+}
+
 export const serveImageController = (req: Request, res: Response, next: NextFunction) => {
   const { name } = req.params
   res.sendFile(path.resolve(UPLOAD_IMAGES_DIR, name), (err) => {
     if (err) {
       res.status((err as any).status).send(USERS_MESSAGES.NOT_FOUND)
     }
-  })
-}
-
-export const uploadVideoController = async (req: Request, res: Response, next: NextFunction) => {
-  const url = await mediasService.uploadvideo(req)
-  console.log(req.body)
-  res.json({
-    message: USERS_MESSAGES.UPLOAD_SUCCESS,
-    result: url
   })
 }
 

@@ -61,7 +61,7 @@ export const handleUploadVideo = async (req: Request) => {
     maxFileSize: 50 * 1024 * 1024, //50MB
     filter: function ({ name, originalFilename, mimetype }) {
       // name là key truyền lên
-      const valid = name === 'video' && Boolean(mimetype?.includes('mp4/'))
+      const valid = name === 'video' && Boolean(mimetype?.includes('mp4'))
       if (!valid) {
         form.emit('error' as any, new Error('File type is not valid') as any)
       }
@@ -79,11 +79,9 @@ export const handleUploadVideo = async (req: Request) => {
       const videos = files.video as File[]
       videos.forEach((video) => {
         const ext = getExtenseion(video.originalFilename as string)
-        fs.renameSync(video.filepath, video.filepath + '.' + ext)
-        video.newFilename = video.newFilename + '.' + ext
+        // fs.renameSync(video.filepath, video.filepath + '.' + ext)
+        fs.renameSync(video.filepath, video.filepath)
       })
-      console.log(videos)
-
       resolve(files.video as File[])
     })
   })

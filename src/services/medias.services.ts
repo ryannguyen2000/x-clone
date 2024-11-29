@@ -4,11 +4,11 @@ import sharp from 'sharp'
 import { UPLOAD_IMAGES_DIR } from '~/constants/dir'
 import { getNameFromFullname, handleUploadImage, handleUploadVideo } from '~/utils/file'
 import fs from 'fs'
-import { isProduction } from '~/controllers/config'
 import { config } from 'dotenv'
 import { MediaType } from '~/constants/enums'
 import { Media } from '~/models/Orther'
 import { encodeHLSWithMultipleVideoStreams } from '~/utils/videos'
+import { isProduction } from '~/constants/config'
 
 config()
 

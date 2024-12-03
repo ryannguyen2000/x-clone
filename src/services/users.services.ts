@@ -12,7 +12,7 @@ import { USERS_MESSAGES } from '~/constants/messages'
 import databaseService from './database.services'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
-import Follower from '~/models/schemas/Followers.schema'
+import Follower from '~/models/schemas/Follower.schema'
 import axios from 'axios'
 
 config()

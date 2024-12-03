@@ -9,6 +9,7 @@ import { UPLOAD_VIDEOS_DIR } from './constants/dir'
 import staticRouter from './routers/static.routes'
 // import { MongoClient } from 'mongodb'
 import tweetRouters from './routers/tweets.routes'
+import bookmarksRouter from './routers/bookmarks.routes'
 
 config()
 const app = express()
@@ -24,6 +25,7 @@ app.use('/medias', mediasRouter)
 app.use('/static', staticRouter)
 app.use('/static/video', express.static(UPLOAD_VIDEOS_DIR))
 app.use('/tweets', tweetRouters)
+app.use('/bookmarks', bookmarksRouter)
 
 databaseService.connect().then(() => {
   // dùng để tạo index để search nhanh hơn

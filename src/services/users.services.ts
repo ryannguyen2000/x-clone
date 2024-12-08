@@ -102,6 +102,7 @@ class UsersService {
       user_id: user_id.toString(),
       verify: UserVerifyStatus.Unverified
     })
+    
     await databaseService.users.insertOne(
       new User({
         ...payload,
@@ -125,7 +126,6 @@ class UsersService {
         iat
       })
     )
-    console.log('email_verify_token', email_verify_token)
     return {
       access_token,
       refresh_token

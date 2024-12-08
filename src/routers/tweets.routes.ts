@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { tweetController } from '~/controllers/tweets.controllers'
-import { createTweetValidator } from '~/middlewares/tweets.middlewares'
-import { accessTokenValidator, verifiedUserValidator } from '~/middlewares/users.middlewares'
+import { getTweetController, tweetController } from '~/controllers/tweets.controllers'
+import { audienceValidator, createTweetIdValidator, TweetIdValidator } from '~/middlewares/tweets.middlewares'
+import { accessTokenValidator, isUserLoggedInValidator, verifiedUserValidator } from '~/middlewares/users.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers'
 
 const tweetRouters = Router()
@@ -16,8 +16,23 @@ tweetRouters.post(
   '/',
   accessTokenValidator,
   verifiedUserValidator,
-  createTweetValidator,
+  createTweetIdValidator,
   wrapRequestHandler(tweetController)
+)
+
+/**
+ * Description: Get Tweet detail
+ * Post: /:tweet_id
+ * Method: GET
+ * Header: { Authorization?: Bearer <access_token> }
+ */
+tweetRouters.get(
+  '/:tweet_id',
+  TweetIdValidator,
+  isUserLoggedInValidator(accessTokenValidator),
+  isUserLoggedInValidator(verifiedUserValidator),
+  wrapRequestHandler(audienceValidator),
+  wrapRequestHandler(getTweetController)
 )
 
 export default tweetRouters

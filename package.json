@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ryannguyen2000/x-clone#readme",
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@types/formidable": "^3.4.5",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash": "^4.17.13",

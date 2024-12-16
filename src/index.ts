@@ -11,6 +11,7 @@ import staticRouter from './routers/static.routes'
 import tweetRouters from './routers/tweets.routes'
 import bookmarksRouter from './routers/bookmarks.routes'
 import likesRouter from './routers/likes.routes'
+// import '~/utils/faker'
 
 config()
 const app = express()

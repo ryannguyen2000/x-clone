@@ -16,7 +16,7 @@ export interface RegisterReqBody {
   email: string
   password: string
   confirm_password: string
-  date_of_birth: Date
+  date_of_birth: Date | string
 }
 
 export interface LogoutReqBody {
